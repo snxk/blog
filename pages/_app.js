@@ -1,25 +1,26 @@
-import Link from "next/link";
+import '@/css/tailwind.css'
 
-function MyApp({ Component, pageProps }) {
+import { MDXProvider } from '@mdx-js/react'
+import { ThemeProvider } from 'next-themes'
+import { DefaultSeo } from 'next-seo'
+import Head from 'next/head'
+
+import { SEO } from '@/components/SEO'
+import LayoutWrapper from '@/components/LayoutWrapper'
+import MDXComponents from '@/components/MDXComponents'
+
+export default function App({ Component, pageProps }) {
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">
-              <a>Home</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/about">
-              <a>About</a>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <Component {...pageProps} />
-    </div>
-  );
+    <ThemeProvider attribute="class">
+      <MDXProvider components={MDXComponents}>
+        <Head>
+          <meta content="width=device-width, initial-scale=1" name="viewport" />
+        </Head>
+        <DefaultSeo {...SEO} />
+        <LayoutWrapper>
+          <Component {...pageProps} />
+        </LayoutWrapper>
+      </MDXProvider>
+    </ThemeProvider>
+  )
 }
-
-export default MyApp;
